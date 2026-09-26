@@ -1,19 +1,22 @@
 """SonarQube for IDE のデモ用サンプル（わざと問題を入れています）。"""
 
+import os
 import zipfile
 
 # ============================================================
 # 【1】ハードコードされた API キー
 #     ルール: python:S6418 (Secrets should not be hard-coded)
 # ============================================================
-API_KEY = "aB3xY9zQ7mK2pL5nR8tV4wC6dF1gH0jS"
+# → IDE の指摘を受けて、環境変数から読むように修正済み
+API_KEY = os.environ.get("API_KEY", "")
 
 
 # ============================================================
 # 【2】ハードコードされたパスワード
 #     ルール: python:S2068 (Credentials should not be hard-coded)
 # ============================================================
-DB_PASSWORD = "kR7vQn2mXt9Bz4Lw"
+# → IDE の指摘を受けて、環境変数から読むように修正済み
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
 
 
 # ============================================================

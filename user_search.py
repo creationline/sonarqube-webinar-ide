@@ -44,7 +44,7 @@ def search_users() -> str:
     with sqlite3.connect("demo.db") as conn:
         cursor = conn.cursor()
         # ↓ 外部入力を文字列連結で SQL に埋め込んでいるのが問題のポイント
-        cursor.execute("SELECT id, name FROM users WHERE name LIKE '%" + keyword + "%'")
+        cursor.execute("SELECT id, name FROM users WHERE name LIKE '%" + keyword + "%' ORDER BY name")
         rows = cursor.fetchall()
 
     return str(rows)

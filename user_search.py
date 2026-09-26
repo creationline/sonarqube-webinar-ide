@@ -45,6 +45,8 @@ def search_users() -> str:
         cursor = conn.cursor()
         # ↓ 外部入力を文字列連結で SQL に埋め込んでいるのが問題のポイント
         cursor.execute("SELECT id, name FROM users WHERE name LIKE '%" + keyword + "%'")
+        # 外部入力はプレースホルダ（?）で渡し、SQL 文に直接埋め込まない
+        # cursor.execute("SELECT id, name FROM users WHERE name LIKE ?", ("%" + keyword + "%",))        
         rows = cursor.fetchall()
 
     return str(rows)

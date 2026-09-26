@@ -13,7 +13,7 @@ SonarQube for IDE と SonarQube Cloud のデモ用リポジトリです。
 
 | ファイル | 内容 |
 |---|---|
-| `user_manager.py` | IDE で検知される問題（4 件） |
+| `user_manager.py` | IDE で検知される問題（2 件） |
 | `test_user_manager.py` | テストコードの問題（3 件）。テストは意図的に半分だけ書いてある |
 | `user_search.py` | SQL インジェクション（サーバー側でのみ検知） |
 | `sonar-project.properties` | SonarQube Cloud の解析設定 |
@@ -23,8 +23,6 @@ SonarQube for IDE と SonarQube Cloud のデモ用リポジトリです。
 
 | # | 内容 | ルール | 検知される場所 |
 |---|---|---|---|
-| 1 | API キーのハードコード | python:S6418 | IDE |
-| 2 | パスワードのハードコード | python:S2068 | IDE |
 | 3 | ZIP を無制限に展開（Zip Bomb） | python:S5042 | IDE |
 | 4 | 制御構文のネストが深すぎる | python:S134 | IDE |
 | 5 | いつも成功してしまう assert | python:S5905 | IDE |

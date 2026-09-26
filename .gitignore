@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+demo.db
+.scannerwork/
+.coverage
+coverage.xml
+
+# Claude がチャットに渡したファイルの自動保存先
+Claude outputs/

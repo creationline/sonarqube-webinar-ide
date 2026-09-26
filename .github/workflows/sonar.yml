@@ -1,0 +1,45 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # PR の差分解析を正しく行うため全履歴を取得する
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # カバレッジを出さないとダッシュボードの Coverage が「—」になる
+      # テストが 1 件も無い（README だけの main）と unittest が終了コード 5 で
+      # 失敗し scan まで進まないので、そのときは計測を飛ばす
+      - name: Run tests with coverage
+        run: |
+          if ls test_*.py >/dev/null 2>&1; then
+            coverage run --source=. --omit="test_*.py" -m unittest discover
+            coverage xml
+          fi
+
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+# 重要（デモ当日の注意）:
+#   SonarQube Cloud 側の Automatic Analysis は「無効」にしておくこと。
+#   Automatic Analysis はカバレッジレポートを取り込めないため、
+#   有効なままだと Coverage が空欄のままになる。さらに CI 解析と併用は
+#   できず、scan 側がエラーになる。
+#   Administration > Analysis Method で CI-based analysis を選ぶ。
